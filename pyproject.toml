@@ -1,0 +1,69 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai-subtitle-generator"
+version = "0.6.2"
+description = "Plugin-host desktop tool for AI subtitle and caption generation from audio/video."
+readme = "docs/README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "ai-subtitle-generator contributors" }]
+keywords = ["subtitles", "captions", "whisper", "asr", "srt", "vtt", "translation"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Win32 (MS Windows)",
+    "Intended Audience :: End Users/Desktop",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Topic :: Multimedia :: Video",
+]
+
+dependencies = [
+    "pydantic>=2.7,<3",
+    "typer>=0.12",
+    "rich>=13.7",
+    "tomli-w>=1.0",
+    "platformdirs>=4.2",
+    "soundfile>=0.12",
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+whisper = ["openai-whisper>=20231117"]
+faster-whisper = ["faster-whisper>=1.0.3"]
+translate = ["argostranslate>=1.9", "deep-translator>=1.11"]
+gui = ["PySide6>=6.7"]
+dev = [
+    "pytest>=8.2",
+    "pytest-asyncio>=0.23",
+    "mypy>=1.10",
+    "ruff>=0.5",
+    "black>=24.4",
+    "isort>=5.13",
+]
+
+[project.scripts]
+ai-subtitle-generator = "ai_subtitle_generator.__main__:main"
+
+[project.entry-points."ai_subtitle_generator.plugins"]
+whisper_faster = "plugins.transcribers.whisper_faster:WhisperFasterPlugin"
+srt_formatter = "plugins.formatters.srt:SRTFormatterPlugin"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_subtitle_generator"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+plugins = ["pydantic.mypy"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
