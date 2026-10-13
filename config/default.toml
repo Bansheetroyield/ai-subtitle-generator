@@ -1,0 +1,40 @@
+# ai-subtitle-generator — default runtime configuration
+# Copy to config/local.toml and edit; local.toml is gitignored.
+
+[app]
+data_dir = "%LOCALAPPDATA%/ai-subtitle-generator"
+cache_dir = "%LOCALAPPDATA%/ai-subtitle-generator/cache"
+log_level = "INFO"
+max_workers = 4
+
+[audio]
+sample_rate = 16000          # Whisper expects 16 kHz mono
+channels = 1
+vad_enabled = true
+vad_min_speech_ms = 250
+vad_min_silence_ms = 400
+
+[transcription]
+default_backend = "whisper_faster"
+model_size = "large-v3"      # tiny | base | small | medium | large-v3
+compute_type = "int8_float16"
+language = "auto"
+beam_size = 5
+word_timestamps = true
+
+[translation]
+enabled = false
+target_language = "en"
+backend = "argos"
+
+[formatters]
+default = "srt"
+line_max_chars = 42
+line_max_rows = 2
+min_duration_ms = 900
+max_duration_ms = 7000
+
+[plugins]
+autodiscover = true
+paths = ["plugins"]
+disabled = []
