@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.log
+
+# Model weights (large — pull via scripts/fetch_whisper_models.py)
+models/weights/
+*.bin
+*.onnx
+*.pt
+*.gguf
+
+# Native build artifacts
+native/build/
+*.dll
+*.so
+*.dylib
+*.pdb
+*.obj
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# User data
+.captions_cache/
+exports/
+config/local.toml
